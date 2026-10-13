@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
@@ -12,6 +13,9 @@ var travelRouter = require('./app_server/routes/travel');
 var apiRouter = require('./app_api/routes/index');
 
 var app = express();
+app.use(cors({
+  origin: 'http://localhost:4200'
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));

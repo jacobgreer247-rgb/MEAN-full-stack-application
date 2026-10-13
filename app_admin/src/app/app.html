@@ -1,0 +1,35 @@
+
+<div class="container py-4">
+
+  <header class="bg-primary text-white rounded p-4 mb-4">
+    <h1 class="mb-1">Travlr Getaways</h1>
+    <p class="mb-0">Trip Administration Dashboard</p>
+  </header>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <app-trip-list
+        (editTrip)="onEditTrip($event)">
+      </app-trip-list>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4" *ngIf="selectedTripCode">
+    <div class="card-body">
+      <app-edit-trip
+        [tripCode]="selectedTripCode">
+      </app-edit-trip>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <app-add-trip></app-add-trip>
+    </div>
+  </div>
+
+  <footer class="text-center text-muted py-3">
+    Travlr Getaways Administration
+  </footer>
+
+</div>
