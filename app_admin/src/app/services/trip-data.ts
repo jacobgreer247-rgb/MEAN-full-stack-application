@@ -11,28 +11,30 @@ export class TripData {
 
   constructor(private http: HttpClient) {}
 
-  // Get all trips
   getTrips(): Observable<Trip[]> {
     return this.http.get<Trip[]>(this.apiUrl);
   }
 
-  // Add a new trip
   addTrip(trip: Trip): Observable<Trip> {
     return this.http.post<Trip>(this.apiUrl, trip);
   }
 
-  // Get one trip by its code
   getTrip(code: string): Observable<Trip> {
     return this.http.get<Trip>(
       `${this.apiUrl}/${encodeURIComponent(code)}`
     );
   }
 
-  // Update an existing trip
   updateTrip(code: string, trip: Trip): Observable<Trip> {
     return this.http.put<Trip>(
       `${this.apiUrl}/${encodeURIComponent(code)}`,
       trip
+    );
+  }
+
+  deleteTrip(code: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.apiUrl}/${encodeURIComponent(code)}`
     );
   }
 }

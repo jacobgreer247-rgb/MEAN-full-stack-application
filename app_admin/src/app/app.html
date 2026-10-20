@@ -1,4 +1,3 @@
-
 <div class="container py-4">
 
   <header class="bg-primary text-white rounded p-4 mb-4">
@@ -6,27 +5,83 @@
     <p class="mb-0">Trip Administration Dashboard</p>
   </header>
 
-  <div class="card shadow-sm mb-4">
+  <div class="card shadow-sm mb-4" *ngIf="!auth.isLoggedIn()">
     <div class="card-body">
-      <app-trip-list
-        (editTrip)="onEditTrip($event)">
-      </app-trip-list>
+      <h2 class="mb-3">Admin Login</h2>
+
+      <form (ngSubmit)="login()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-control"
+            [(ngModel)]="email"
+            autocomplete="username"
+            required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="form-control"
+            [(ngModel)]="password"
+            autocomplete="current-password"
+            required>
+        </div>
+
+        <p class="text-danger" role="alert" *ngIf="loginError">
+          {{ loginError }}
+        </p>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loggingIn">
+          {{ loggingIn ? 'Logging in...' : 'Log In' }}
+        </button>
+      </form>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4" *ngIf="selectedTripCode">
-    <div class="card-body">
-      <app-edit-trip
-        [tripCode]="selectedTripCode">
-      </app-edit-trip>
-    </div>
-  </div>
+  <ng-container *ngIf="auth.isLoggedIn()">
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <app-add-trip></app-add-trip>
+    <div class="text-end mb-3">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="logout()">
+        Log Out
+      </button>
     </div>
-  </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <app-trip-list
+          (editTrip)="onEditTrip($event)">
+        </app-trip-list>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4" *ngIf="selectedTripCode">
+      <div class="card-body">
+        <app-edit-trip
+          [tripCode]="selectedTripCode">
+        </app-edit-trip>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <app-add-trip></app-add-trip>
+      </div>
+    </div>
+
+  </ng-container>
 
   <footer class="text-center text-muted py-3">
     Travlr Getaways Administration
